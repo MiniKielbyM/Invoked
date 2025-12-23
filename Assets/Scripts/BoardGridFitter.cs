@@ -5,14 +5,12 @@ using UnityEngine.UI;
 public class BoardSlotSpawner : MonoBehaviour
 {
     public GameObject slotWrapperPrefab;
-
     public int rows = 5;
     public int minColumns = 5;
     public float cardRatio = 0.714f; // width / height
 
     GridLayoutGroup grid;
     RectTransform rect;
-
     void Awake()
     {
         grid = GetComponent<GridLayoutGroup>();
@@ -71,7 +69,17 @@ public class BoardSlotSpawner : MonoBehaviour
         int totalSlots = rows * columns;
         for (int i = 0; i < totalSlots; i++)
         {
-            Instantiate(slotWrapperPrefab, transform);
+            GameObject x = Instantiate(slotWrapperPrefab, transform);
+            if(i == ((totalSlots / 5)*4)-1)
+            {
+                GlobalVariableManager.PlayerDeck = x;
+                GlobalVariableManager.PlayerDeck.name = "PlayerDeck";
+            }
+            else if(i == (totalSlots / 5)-1)
+            {
+                GlobalVariableManager.OpponentDeck = x;
+                GlobalVariableManager.OpponentDeck.name = "OpponentDeck";
+            }
         }
     }
 
