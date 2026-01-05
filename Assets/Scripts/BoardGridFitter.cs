@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Math = System.Math;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(GridLayoutGroup))]
@@ -6,7 +8,7 @@ public class BoardSlotSpawner : MonoBehaviour
 {
     public GameObject slotWrapperPrefab;
     public int rows = 5;
-    public int minColumns = 5;
+    public int columns = 9;
     public float cardRatio = 0.714f; // width / height
 
     GridLayoutGroup grid;
@@ -48,13 +50,6 @@ public class BoardSlotSpawner : MonoBehaviour
         float cellHeight = (height - grid.spacing.y * (rows - 1)) / rows;
         float cellWidth = cellHeight * cardRatio;
 
-        int columns = Mathf.FloorToInt(
-            (width + grid.spacing.x) / (cellWidth + grid.spacing.x)
-        );
-
-        columns = Mathf.Max(columns, minColumns);
-        if (columns % 2 == 0) columns++; // force odd
-
         float totalWidth = columns * cellWidth + (columns - 1) * grid.spacing.x;
         if (totalWidth > width)
         {
@@ -70,12 +65,12 @@ public class BoardSlotSpawner : MonoBehaviour
         for (int i = 0; i < totalSlots; i++)
         {
             GameObject x = Instantiate(slotWrapperPrefab, transform);
-            if(i == ((totalSlots / 5)*4)-1)
+            if (i == ((totalSlots / 9) * 4) - 1)
             {
                 GlobalVariableManager.PlayerDeck = x;
                 GlobalVariableManager.PlayerDeck.name = "PlayerDeck";
             }
-            else if(i == (totalSlots / 5)-1)
+            else if (i == (totalSlots / 9) - 1)
             {
                 GlobalVariableManager.OpponentDeck = x;
                 GlobalVariableManager.OpponentDeck.name = "OpponentDeck";
