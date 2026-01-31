@@ -21,6 +21,8 @@ public class MainServer : MonoBehaviour
     private CancellationTokenSource cts;
     private bool isConnected = false;
 
+    public string currentLobbyID = null;
+
     void Start()
     {
         ConnectToServer();
@@ -105,6 +107,7 @@ public class MainServer : MonoBehaviour
             client?.Close();
             isConnected = false;
             Debug.Log("Disconnected from server.");
+            currentLobbyID = null;
         }
         catch (Exception ex)
         {
